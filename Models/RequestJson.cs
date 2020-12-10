@@ -152,15 +152,26 @@ namespace Record
         public int currentpage { get; set; }
     }
     /// <summary>
-    /// 手动备案
+    /// 官方备案
     /// </summary>
-    public class RecordJson
+    public class RecordmJson
     {
         /// <summary>
         /// 备案id
         /// </summary>
         /// <value></value>
-        public int id { get; set; }
+        public string[] recordid { get; set; }
+        /// <summary>
+        /// 身份认证
+        /// </summary>
+        /// <value></value>
+        public string keychain { get; set; }
+    }
+    /// <summary>
+    /// 手动备案
+    /// </summary>
+    public class RecordJson
+    {
         /// <summary>
         /// 备案名称
         /// </summary>
@@ -171,11 +182,6 @@ namespace Record
         /// </summary>
         /// <value></value>
         public string area { get; set; }
-        /// <summary>
-        /// 0:官方备案;1:手动备案;
-        /// </summary>
-        /// <value></value>
-        public int recordflag { get; set; }
         /// <summary>
         /// 身份认证
         /// </summary>

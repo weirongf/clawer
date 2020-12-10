@@ -384,35 +384,58 @@ namespace Record.Controllers
         }
 
         [HttpPost("uprc")]
-        public object UpRecord([FromBody] RecordJson rj)
+        public object UpRecord([FromBody] RecordmJson rj)
         {
             ResultReturn rr = new ResultReturn();
             try
             {
-                string[] cookies = new readcookie().recognition(rj.keychain, Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
-                if (cookies[0] == "1")
+                if (DateTime.Now < Convert.ToDateTime(DateTime.Now.Year + "-" + DateTime.Now.Month + "-06 00:00:00"))
                 {
-                    string sqlstr = "";
-                    Sql sc = new Sql();
-
-                    sqlstr = $"update  [userinfo] set   grade_flag=@grade_flag,current_status=@current_status  where  userid=@userid";
-                    sc.cmd = new SqlCommand();
-                    sc.cmd.CommandText = sqlstr;
-                    sc.cmd.Parameters.Add(new SqlParameter("@grade_flag", gj.apply_grade));
-                    sc.cmd.Parameters.Add(new SqlParameter("@current_status", 2));
-                    sc.cmd.Parameters.Add(new SqlParameter("@userid", cookies[1]));
-                    if (sc.sqlExcute() > 0)
+                    string[] cookies = new readcookie().recognition(rj.keychain, Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
+                    if (cookies[0] == "1")
                     {
-                        rr.status = "1";
-                        rr.message = "提交成功";
-                        rr.result = "";
-                        rr.keychain = "";
-                        return rr;
+                        string sqlstr = $"select count(id) from myrecord where userid=@userid and recordid in({string.Join(",",rj.recordid)}) and DATE_FORMAT(createtime,'%Y-%m')='{DateTime.Now.ToString("yyyy-MM")}'";
+                        Sql sc = new Sql();
+                        sc.cmd = new SqlCommand();
+                        sc.cmd.CommandText = sqlstr;
+                        sc.cmd.Parameters.Add(new SqlParameter("@userid", cookies[1]));
+                        if (Convert.ToInt16(sc.sqlScalar())==0)
+                        {
+                            sqlstr = $"insert into [myrecord] (userid,recordid,status,details,createtime,recordname,area,recordflag)  select  @userid,[id],0,‘’,‘{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}’,recordname,area,0 from recordlist where  [id] in ({string.Join(",",rj.recordid)}) ";
+                            sc = new Sql();
+                            sc.cmd = new SqlCommand();
+                            sc.cmd.CommandText = sqlstr;
+                            sc.cmd.Parameters.Add(new SqlParameter("@userid", cookies[1]));
+                            if (sc.sqlExcute() > 0)
+                            {
+                                rr.status = "1";
+                                rr.message = "提交成功";
+                                rr.result = "";
+                                rr.keychain = "";
+                                return rr;
+                            }
+                            else
+                            {
+                                rr.status = "0";
+                                rr.message = "提交失败";
+                                rr.result = "";
+                                rr.keychain = "";
+                                return rr;
+                            }
+                        }
+                        else
+                        {
+                            rr.status = "0";
+                            rr.message = "重复提交";
+                            rr.result = "";
+                            rr.keychain = "";
+                            return rr;
+                        }
                     }
                     else
                     {
                         rr.status = "0";
-                        rr.message = "提交失败";
+                        rr.message = "用户验证失败";
                         rr.result = "";
                         rr.keychain = "";
                         return rr;
@@ -421,11 +444,12 @@ namespace Record.Controllers
                 else
                 {
                     rr.status = "0";
-                    rr.message = "用户验证失败";
+                    rr.message = "超过规定提交时间,不可提交!";
                     rr.result = "";
                     rr.keychain = "";
                     return rr;
                 }
+
             }
             catch
             {
@@ -437,11 +461,85 @@ namespace Record.Controllers
             }
         }
 
+        [HttpPost("uprcs")]
+        public object UpRecords([FromBody] RecordJson rj)
+        {
+            ResultReturn rr = new ResultReturn();
+            try
+            {
+                if (DateTime.Now < Convert.ToDateTime(DateTime.Now.Year + "-" + DateTime.Now.Month + "-06 00:00:00"))
+                {
+                    string[] cookies = new readcookie().recognition(rj.keychain, Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
+                    if (cookies[0] == "1")
+                    {
+                        string sqlstr = $"select id from myrecord where userid=@userid and recordname=@recordname and DATE_FORMAT(createtime,'%Y-%m')='{DateTime.Now.ToString("yyyy-MM")}'";
+                        Sql sc = new Sql();
+                        sc.cmd = new SqlCommand();
+                        sc.cmd.CommandText = sqlstr;
+                        sc.cmd.Parameters.Add(new SqlParameter("@userid", cookies[1]));
+                        sc.cmd.Parameters.Add(new SqlParameter("@recordname", rj.recordname));
+                        if (string.IsNullOrEmpty(sc.sqlScalar()))
+                        {
+                            sqlstr = $"insert into [myrecord] (userid,recordid,status,details,createtime,recordname,area,recordflag) values  (@userid,0,0,‘’,‘{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}’,@recordname,@area,1)  ";
+                            sc = new Sql();
+                            sc.cmd = new SqlCommand();
+                            sc.cmd.CommandText = sqlstr;
+                            sc.cmd.Parameters.Add(new SqlParameter("@recordname", rj.recordname));
+                            sc.cmd.Parameters.Add(new SqlParameter("@area", rj.area));
+                            sc.cmd.Parameters.Add(new SqlParameter("@userid", cookies[1]));
+                            if (sc.sqlExcute() > 0)
+                            {
+                                rr.status = "1";
+                                rr.message = "提交成功";
+                                rr.result = "";
+                                rr.keychain = "";
+                                return rr;
+                            }
+                            else
+                            {
+                                rr.status = "0";
+                                rr.message = "提交失败";
+                                rr.result = "";
+                                rr.keychain = "";
+                                return rr;
+                            }
+                        }
+                        else
+                        {
+                            rr.status = "0";
+                            rr.message = "重复提交";
+                            rr.result = "";
+                            rr.keychain = "";
+                            return rr;
+                        }
+                    }
+                    else
+                    {
+                        rr.status = "0";
+                        rr.message = "用户验证失败";
+                        rr.result = "";
+                        rr.keychain = "";
+                        return rr;
+                    }
+                }
+                else
+                {
+                    rr.status = "0";
+                    rr.message = "超过规定提交时间,不可提交!";
+                    rr.result = "";
+                    rr.keychain = "";
+                    return rr;
+                }
 
-
-
-
-
-
+            }
+            catch
+            {
+                rr.status = "0";
+                rr.message = "提交异常";
+                rr.result = "";
+                rr.keychain = "";
+                return rr;
+            }
+        }
     }
 }
