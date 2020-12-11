@@ -109,7 +109,7 @@ namespace Record.Controllers
                 {
                     sc = new Sql();
 
-                    bool rl = sc.DoTran(sjs.account, sjs.password, sjs.company);
+                    bool rl = sc.DoTran(sjs.account, sjs.password, sjs.company,"","","","");
                     if (rl == true)
                     {
                         rr.status = "1";
@@ -394,18 +394,19 @@ namespace Record.Controllers
                     string[] cookies = new readcookie().recognition(rj.keychain, Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
                     if (cookies[0] == "1")
                     {
-                        string sqlstr = $"select count(id) from myrecord where userid=@userid and recordid in({string.Join(",",rj.recordid)}) and DATE_FORMAT(createtime,'%Y-%m')='{DateTime.Now.ToString("yyyy-MM")}'";
+                        string sqlstr = $"select count(id) from myrecord where userid=@userid and recordid in({string.Join(",", rj.recordid)})  and YEAR(createtime)='{DateTime.Now.ToString("yyyy")}'  and MONTH(createtime)='{DateTime.Now.ToString("MM")}' ";
                         Sql sc = new Sql();
                         sc.cmd = new SqlCommand();
                         sc.cmd.CommandText = sqlstr;
                         sc.cmd.Parameters.Add(new SqlParameter("@userid", cookies[1]));
-                        if (Convert.ToInt16(sc.sqlScalar())==0)
+                        if (Convert.ToInt16(sc.sqlScalar()) == 0)
                         {
-                            sqlstr = $"insert into [myrecord] (userid,recordid,status,details,createtime,recordname,area,recordflag)  select  @userid,[id],0,‘’,‘{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}’,recordname,area,0 from recordlist where  [id] in ({string.Join(",",rj.recordid)}) ";
+                            sqlstr = $"insert into [myrecord] (userid,recordid,status,details,createtime,recordname,area,recordflag) ( select  @userid,[id],0,'','{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}',recordname,area,0 from recordlist where  [id] in ({string.Join(",", rj.recordid)}) )";
                             sc = new Sql();
                             sc.cmd = new SqlCommand();
                             sc.cmd.CommandText = sqlstr;
                             sc.cmd.Parameters.Add(new SqlParameter("@userid", cookies[1]));
+
                             if (sc.sqlExcute() > 0)
                             {
                                 rr.status = "1";
@@ -472,7 +473,7 @@ namespace Record.Controllers
                     string[] cookies = new readcookie().recognition(rj.keychain, Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
                     if (cookies[0] == "1")
                     {
-                        string sqlstr = $"select id from myrecord where userid=@userid and recordname=@recordname and DATE_FORMAT(createtime,'%Y-%m')='{DateTime.Now.ToString("yyyy-MM")}'";
+                        string sqlstr = $"select id from myrecord where userid=@userid and recordname=@recordname and YEAR(createtime)='{DateTime.Now.ToString("yyyy")}'  and MONTH(createtime)='{DateTime.Now.ToString("MM")}'";
                         Sql sc = new Sql();
                         sc.cmd = new SqlCommand();
                         sc.cmd.CommandText = sqlstr;
@@ -480,7 +481,7 @@ namespace Record.Controllers
                         sc.cmd.Parameters.Add(new SqlParameter("@recordname", rj.recordname));
                         if (string.IsNullOrEmpty(sc.sqlScalar()))
                         {
-                            sqlstr = $"insert into [myrecord] (userid,recordid,status,details,createtime,recordname,area,recordflag) values  (@userid,0,0,‘’,‘{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}’,@recordname,@area,1)  ";
+                            sqlstr = $"insert into [myrecord] (userid,recordid,status,details,createtime,recordname,area,recordflag) values  (@userid,0,0,'','{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}',@recordname,@area,1)  ";
                             sc = new Sql();
                             sc.cmd = new SqlCommand();
                             sc.cmd.CommandText = sqlstr;
@@ -541,5 +542,192 @@ namespace Record.Controllers
                 return rr;
             }
         }
+
+        [HttpPost("myrecord")]
+        public object MyRecord([FromBody] MyRecordJson mrd)
+        {
+            ResultReturn rr = new ResultReturn();
+            try
+            {
+                string[] cookies = new readcookie().recognition(mrd.keychain, Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
+                if (cookies[0] == "1")
+                {
+                    List<MyRecordlist> mrdt = new List<MyRecordlist>();
+                    string sqlstr = $"select * from myrecord where userid=@userid and YEAR(createtime)='{Convert.ToDateTime(mrd.time).ToString("yyyy")}'  and MONTH(createtime)='{Convert.ToDateTime(mrd.time).ToString("MM")}'";
+                    Sql sc = new Sql();
+                    sc.cmd = new SqlCommand();
+                    sc.cmd.CommandText = sqlstr;
+                    sc.cmd.Parameters.Add(new SqlParameter("@userid", cookies[1]));
+                    DataTable dt = sc.sqlAdapter();
+                    if (dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            MyRecordlist mrdo = new MyRecordlist();
+                            mrdo.id = Convert.ToUInt16(dr["id"]);
+                            mrdo.recordname = dr["recordname"].ToString();
+                            mrdo.area = dr["area"].ToString();
+                            mrdo.status = Convert.ToUInt16(dr["status"]);
+                            mrdo.createtime = dr["createtime"].ToString();
+                            mrdo.details = dr["details"].ToString() == "" ? (new MyRecord_detail()) : LitJson.JsonMapper.ToObject<MyRecord_detail>(dr["details"].ToString());
+                            mrdt.Add(mrdo);
+                        }
+                        rr.status = "1";
+                        rr.message = "获取成功";
+                        rr.result = mrdt;
+                        rr.keychain = "";
+                        return rr;
+                    }
+                    else
+                    {
+                        rr.status = "1";
+                        rr.message = "获取为空";
+                        rr.result = mrdt;
+                        rr.keychain = "";
+                        return rr;
+
+                    }
+
+                }
+                else
+                {
+                    rr.status = "0";
+                    rr.message = "用户验证失败";
+                    rr.result = "";
+                    rr.keychain = "";
+                    return rr;
+                }
+            }
+            catch
+            {
+                rr.status = "0";
+                rr.message = "获取异常";
+                rr.result = "";
+                rr.keychain = "";
+                return rr;
+            }
+        }
+
+        [HttpPost("upmr")]
+        public object UpMyRecord_details([FromBody] UpRecordDetail urd)
+        {
+            ResultReturn rr = new ResultReturn();
+            try
+            {
+                string[] cookies = new readcookie().recognition(urd.keychain, Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
+                if (cookies[0] == "1")
+                {
+                    string sqlstr = $"update [myrecord] set details=@details where [id]=@id and userid=@userid";
+                    Sql sc = new Sql();
+                    sc.cmd = new SqlCommand();
+                    sc.cmd.CommandText = sqlstr;
+                    sc.cmd.Parameters.Add(new SqlParameter("@id", urd.id));
+                    sc.cmd.Parameters.Add(new SqlParameter("@userid", cookies[1]));
+                    sc.cmd.Parameters.Add(new SqlParameter("@details", LitJson.JsonMapper.ToJson(urd.recordDetail)));
+                    if (sc.sqlExcute() > 0)
+                    {
+                        rr.status = "1";
+                        rr.message = "提交成功";
+                        rr.result = "";
+                        rr.keychain = "";
+                        return rr;
+                    }
+                    else
+                    {
+                        rr.status = "0";
+                        rr.message = "提交失败";
+                        rr.result = "";
+                        rr.keychain = "";
+                        return rr;
+                    }
+                }
+                else
+                {
+                    rr.status = "0";
+                    rr.message = "用户验证失败";
+                    rr.result = "";
+                    rr.keychain = "";
+                    return rr;
+                }
+            }
+            catch
+            {
+                rr.status = "0";
+                rr.message = "提交异常";
+                rr.result = "";
+                rr.keychain = "";
+                return rr;
+            }
+        }
+
+        [HttpPost("delmr")]
+        public object DelMyRecord([FromBody] delrecord dl)
+        {
+            ResultReturn rr = new ResultReturn();
+            try
+            {
+                if (DateTime.Now > Convert.ToDateTime(DateTime.Now.Year + "-" + DateTime.Now.Month + "-01 00:00:00") || DateTime.Now < Convert.ToDateTime(DateTime.Now.Year + "-" + DateTime.Now.Month + "-06 00:00:00"))
+                {
+                    string[] cookies = new readcookie().recognition(dl.keychain, Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
+                    if (cookies[0] == "1")
+                    {
+                        string sqlstr = $"delete from [myrecord]  where userid=@userid and [id] in ({string.Join(",",dl.id)})";
+                        Sql sc = new Sql();
+                        sc.cmd = new SqlCommand();
+                        sc.cmd.CommandText = sqlstr;
+                        sc.cmd.Parameters.Add(new SqlParameter("@userid", cookies[1]));
+                        if (sc.sqlExcute() > 0)
+                        {
+                            rr.status = "1";
+                            rr.message = "取消成功";
+                            rr.result = "";
+                            rr.keychain = "";
+                            return rr;
+                        }
+                        else
+                        {
+                            rr.status = "0";
+                            rr.message = "取消失败";
+                            rr.result = "";
+                            rr.keychain = "";
+                            return rr;
+                        }
+                    }
+                    else
+                    {
+                        rr.status = "0";
+                        rr.message = "用户验证失败";
+                        rr.result = "";
+                        rr.keychain = "";
+                        return rr;
+                    }
+                }
+                else
+                {
+                    rr.status = "0";
+                    rr.message = "当前时间,不可取消!";
+                    rr.result = "";
+                    rr.keychain = "";
+                    return rr;
+                }
+            }
+            catch
+            {
+                rr.status = "0";
+                rr.message = "取消备案异常";
+                rr.result = "";
+                rr.keychain = "";
+                return rr;
+            }
+        }
+
+        
+
+        
+
+
+
+
+
     }
 }

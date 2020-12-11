@@ -60,7 +60,7 @@ namespace Record
                 cmd.Connection = conn;
                 result = cmd.ExecuteNonQuery();
             }
-            catch
+            catch(Exception ex)
             {
 
             }
@@ -96,7 +96,7 @@ namespace Record
         }
 
         //执行事务处理
-        public bool DoTran(string username,string password,string company)
+        public bool DoTran(string username,string password,string company,string principal,string contactinfo,string companyaddr,string blpic)
         {
             SqlTransaction myTran;
             //创建一个事务
@@ -117,8 +117,15 @@ namespace Record
                 if (userid=="")
                     throw new Exception();
 
-                // 执行第二条SQL语句
-                cmd.CommandText = $"insert into userinfo ([userid],[company],[principal],[contact_info],[company_addr],[certificate_pic],[bl_pic],[createtime])   values ('{userid}','{company}','','','','','','{DateTime.Now.ToString()}')";
+                //执行第二条SQL语句
+
+                cmd.CommandText = $"insert into userinfo ([userid],[company],[principal],[contact_info],[company_addr],[certificate_pic],[bl_pic],[createtime])   values (@userid,@company,@principal,@contactinfo,@companyaddr,'',@blpic,'{DateTime.Now.ToString()}')";
+                cmd.Parameters.Add(new SqlParameter("@userid", userid));   
+                cmd.Parameters.Add(new SqlParameter("@company", company));  
+                cmd.Parameters.Add(new SqlParameter("@principal", principal));
+                cmd.Parameters.Add(new SqlParameter("@contactinfo", contactinfo));
+                cmd.Parameters.Add(new SqlParameter("@companyaddr", companyaddr)); 
+                cmd.Parameters.Add(new SqlParameter("@blpic", blpic));
                 if (cmd.ExecuteNonQuery() < 0)
                     throw new Exception();
 

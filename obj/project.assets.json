@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "LitJson/0.16.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/LitJSON.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/LitJSON.dll": {}
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {
         "type": "package",
         "compile": {
@@ -289,6 +298,24 @@
     }
   },
   "libraries": {
+    "LitJson/0.16.0": {
+      "sha512": "+BEhJ46W80iXpYndcmx7pFc3w67iLq98t+3W0mAmZUOE7mtdKu00JhSJ1/tu52Yh1zkGgQSFRaWs3M+GxRR5HQ==",
+      "type": "package",
+      "path": "litjson/0.16.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LitJson.0.16.0.nupkg.sha512",
+        "LitJson.nuspec",
+        "lib/net20/LitJSON.dll",
+        "lib/net35/LitJSON.dll",
+        "lib/net40/LitJSON.dll",
+        "lib/net45/LitJSON.dll",
+        "lib/netstandard1.5/LitJSON.dll",
+        "lib/netstandard2.0/LitJSON.dll",
+        "litjson.png"
+      ]
+    },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "sha512": "z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
       "type": "package",
@@ -1476,6 +1503,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "LitJson >= *",
       "System.Data.Common >= 4.3.0",
       "System.Data.SqlClient >= 4.8.2"
     ]
@@ -1486,11 +1514,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\WorkingResources\\C#\\C#Project\\Record\\Record.csproj",
+      "projectUniqueName": "d:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\Record.csproj",
       "projectName": "Record",
-      "projectPath": "d:\\WorkingResources\\C#\\C#Project\\Record\\Record.csproj",
+      "projectPath": "d:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\Record.csproj",
       "packagesPath": "C:\\Users\\wei\\.nuget\\packages\\",
-      "outputPath": "d:\\WorkingResources\\C#\\C#Project\\Record\\obj\\",
+      "outputPath": "d:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\wei\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -1515,6 +1543,10 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "LitJson": {
+            "target": "Package",
+            "version": "[*, )"
+          },
           "System.Data.Common": {
             "target": "Package",
             "version": "[4.3.0, )"

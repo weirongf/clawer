@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WorkingResources\\C#\\C#Project\\Record\\Record.csproj": {}
+    "D:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\Record.csproj": {}
   },
   "projects": {
-    "D:\\WorkingResources\\C#\\C#Project\\Record\\Record.csproj": {
+    "D:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\Record.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WorkingResources\\C#\\C#Project\\Record\\Record.csproj",
+        "projectUniqueName": "D:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\Record.csproj",
         "projectName": "Record",
-        "projectPath": "D:\\WorkingResources\\C#\\C#Project\\Record\\Record.csproj",
+        "projectPath": "D:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\Record.csproj",
         "packagesPath": "C:\\Users\\wei\\.nuget\\packages\\",
-        "outputPath": "D:\\WorkingResources\\C#\\C#Project\\Record\\obj\\",
+        "outputPath": "D:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\wei\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -36,6 +36,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "LitJson": {
+              "target": "Package",
+              "version": "[*, )"
+            },
             "System.Data.Common": {
               "target": "Package",
               "version": "[4.3.0, )"

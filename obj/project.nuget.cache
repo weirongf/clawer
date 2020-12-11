@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9VT7ohULxARbhHKEKAYHvo4jXUFHLR1z9cvgyJVu/j84dUvNWkMU5YSIBNpC4f1Qv32t/rWfoHbv9SHpQAKsFA==",
+  "dgSpecHash": "bSjqCoRrSJeIUhEPu36Y2cWuKOzxhMjnEMT3LMjgrmfPOaYYzl7YzR0U/+s/kpieCVxi8PZUV5lWdOOtZNg70g==",
   "success": true,
-  "projectFilePath": "D:\\WorkingResources\\C#\\C#Project\\Record\\Record.csproj",
+  "projectFilePath": "D:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\Record.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\wei\\.nuget\\packages\\litjson\\0.16.0\\litjson.0.16.0.nupkg.sha512",
     "C:\\Users\\wei\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\wei\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\wei\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
