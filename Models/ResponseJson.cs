@@ -382,4 +382,54 @@ namespace Record
         public string grade_des { get; set; }
 
     }
+        /// <summary>
+    /// 备案列表
+    /// </summary>
+    public class BackRecordlist
+    {
+        public BackRecordlist()
+        {
+            status_des = "0:未审核;1:已审核;2:取消;";
+        }
+        /// <summary>
+        /// 数据id
+        /// </summary>
+        /// <value></value>
+        public int id { get; set; }
+        /// <summary>
+        /// 公司名
+        /// </summary>
+        /// <value></value>
+        public string company{get;set;}
+        /// <summary>
+        /// 备案名
+        /// </summary>
+        /// <value></value>
+        public string recordname { get; set; }
+        /// <summary>
+        /// 备案地区
+        /// </summary>
+        /// <value></value>
+        public string area { get; set; }
+        /// <summary>
+        /// 审核状态
+        /// </summary>
+        /// <value></value>
+        public int status { get; set; }
+        /// <summary>
+        /// 0:未审核;1:已审核;2:取消;
+        /// </summary>
+        /// <value></value>
+        public string status_des { get; set; }
+        /// <summary>
+        /// 备案详细
+        /// </summary>
+        /// <value></value>
+        public MyRecord_detail details { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        /// <value></value>
+        public string createtime { get; set; }
+    }
 }

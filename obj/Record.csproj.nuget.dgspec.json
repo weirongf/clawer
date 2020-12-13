@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\Record.csproj": {}
+    "/Users/rfwei/Project/Record/netcore/Record.csproj": {}
   },
   "projects": {
-    "D:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\Record.csproj": {
+    "/Users/rfwei/Project/Record/netcore/Record.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\Record.csproj",
+        "projectUniqueName": "/Users/rfwei/Project/Record/netcore/Record.csproj",
         "projectName": "Record",
-        "projectPath": "D:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\Record.csproj",
-        "packagesPath": "C:\\Users\\wei\\.nuget\\packages\\",
-        "outputPath": "D:\\WorkingResources\\C#\\C#Project\\Record\\netcore\\obj\\",
+        "projectPath": "/Users/rfwei/Project/Record/netcore/Record.csproj",
+        "packagesPath": "/Users/rfwei/.nuget/packages/",
+        "outputPath": "/Users/rfwei/Project/Record/netcore/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\wei\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/rfwei/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -67,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.201/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -397,4 +397,26 @@ namespace Record
         /// <value></value>
         public string keychain { get; set; }
     }
+    /// <summary>
+    /// 管理员数据
+    /// </summary>
+    public class BackUpRecordJson
+    {
+        /// <summary>
+        /// 数据id
+        /// </summary>
+        /// <value></value>
+        public int id { get; set; }
+        /// <summary>
+        /// 修改状态(1:已审核;2:取消;)
+        /// </summary>
+        /// <value></value>
+        public string status { get; set; }
+        /// <summary>
+        /// 身份认证
+        /// </summary>
+        /// <value></value>
+        public string keychain { get; set; }
+
+    }
 }

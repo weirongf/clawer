@@ -278,8 +278,8 @@ namespace Record.Controllers
                 string[] cookies = new readcookie().recognition(brj.keychain, Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
                 if (cookies[0] == "1" && cookies[2] != "1")
                 {
-                    List<MyRecordlist> mrdt = new List<MyRecordlist>();
-                    string sqlstr = $"select * from myrecord where userid=@userid and YEAR(createtime)='{Convert.ToDateTime(brj.time).ToString("yyyy")}'  and MONTH(createtime)='{Convert.ToDateTime(brj.time).ToString("MM")}'";
+                    List<BackRecordlist> mrdt = new List<BackRecordlist>();
+                    string sqlstr = $"select * from backrecord where YEAR(createtime)='{Convert.ToDateTime(brj.time).ToString("yyyy")}'  and MONTH(createtime)='{Convert.ToDateTime(brj.time).ToString("MM")}'";
                     Sql sc = new Sql();
                     sc.cmd = new SqlCommand();
                     sc.cmd.CommandText = sqlstr;
@@ -289,8 +289,9 @@ namespace Record.Controllers
                     {
                         foreach (DataRow dr in dt.Rows)
                         {
-                            MyRecordlist mrdo = new MyRecordlist();
+                            BackRecordlist mrdo = new BackRecordlist();
                             mrdo.id = Convert.ToUInt16(dr["id"]);
+                            mrdo.company=dr["company"].ToString();
                             mrdo.recordname = dr["recordname"].ToString();
                             mrdo.area = dr["area"].ToString();
                             mrdo.status = Convert.ToUInt16(dr["status"]);
@@ -332,6 +333,69 @@ namespace Record.Controllers
                 rr.keychain = "";
                 return rr;
             }
+        }
+
+        [HttpPost("uprecord")]
+        public object Upuser([FromBody] BackUpRecordJson uij)
+        {
+            ResultReturn rr = new ResultReturn();
+            try
+            {
+                string[] cookies = new readcookie().recognition(uij.keychain, Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
+                if (cookies[0] == "1" && cookies[2] != "1")
+                {
+                    string stopstatus = "";
+                    if (uij.status == "1")
+                    {
+                        stopstatus = "1";
+                    }
+                    else if (uij.status == "2")
+                    {
+                        stopstatus = "2";
+                    }
+
+                    Sql sc = new Sql();
+                    string sqlstr = $"update  [myrecord]  set status=@status  where [id]=@id";
+                    sc.cmd = new SqlCommand();
+                    sc.cmd.CommandText = sqlstr;
+                    sc.cmd.Parameters.Add(new SqlParameter("@id", uij.id));
+                    sc.cmd.Parameters.Add(new SqlParameter("@status", uij.id));
+                    if (sc.sqlExcute() > 0)
+                    {
+                        rr.status = "1";
+                        rr.message = "提交成功";
+                        rr.result = "";
+                        rr.keychain = "";
+                        return rr;
+                    }
+                    else
+                    {
+                        rr.status = "0";
+                        rr.message = "提交失败";
+                        rr.result = "";
+                        rr.keychain = "";
+                        return rr;
+                    }
+                }
+                else
+                {
+                    rr.status = "0";
+                    rr.message = "用户验证失败";
+                    rr.result = "";
+                    rr.keychain = "";
+                    return rr;
+                }
+            }
+            catch
+            {
+                rr.status = "0";
+                rr.message = "提交异常";
+                rr.result = "";
+                rr.keychain = "";
+                return rr;
+            }
+
+
         }
 
 
