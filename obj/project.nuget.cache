@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "2y0qYxquNPJ0N24/8f9NrL0j0KAc2qpYPB0sYCpvekKgZzfcJwEwQS7YuZyR2Kg66iIUD8J+aqK+ilsDGtJ6fg==",
+  "dgSpecHash": "rw6PuIEDF4S77qFTPgnL4f84qkETwatKsrZy71tuQ49G3eaerxLsd2wYPLSlMVq9EKxL0eUQcu1hqc0IkPDm4g==",
   "success": true,
   "projectFilePath": "/Users/rfwei/Project/Record/netcore/Record.csproj",
   "expectedPackageFiles": [
-    "/Users/rfwei/.nuget/packages/litjson/0.16.0/litjson.0.16.0.nupkg.sha512",
+    "/Users/rfwei/.nuget/packages/litjson/0.17.0/litjson.0.17.0.nupkg.sha512",
     "/Users/rfwei/.nuget/packages/microsoft.netcore.platforms/3.1.0/microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "/Users/rfwei/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "/Users/rfwei/.nuget/packages/microsoft.win32.registry/4.7.0/microsoft.win32.registry.4.7.0.nupkg.sha512",

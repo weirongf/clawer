@@ -53,7 +53,6 @@ D:/WorkingResources/C#/C#Project/Record/netcore/obj/Debug/netcoreapp3.1/Record.d
 D:/WorkingResources/C#/C#Project/Record/netcore/obj/Debug/netcoreapp3.1/Record.pdb
 D:/WorkingResources/C#/C#Project/Record/netcore/obj/Debug/netcoreapp3.1/Record.genruntimeconfig.cache
 D:/WorkingResources/C#/C#Project/Record/netcore/bin/Debug/netcoreapp3.1/LitJSON.dll
-/Users/rfwei/Project/Record/netcore/obj/Debug/netcoreapp3.1/Record.csprojAssemblyReference.cache
 /Users/rfwei/Project/Record/netcore/obj/Debug/netcoreapp3.1/Record.csproj.CoreCompileInputs.cache
 /Users/rfwei/Project/Record/netcore/obj/Debug/netcoreapp3.1/Record.MvcApplicationPartsAssemblyInfo.cache
 /Users/rfwei/Project/Record/netcore/obj/Debug/netcoreapp3.1/Record.AssemblyInfoInputs.cache
@@ -62,7 +61,6 @@ D:/WorkingResources/C#/C#Project/Record/netcore/bin/Debug/netcoreapp3.1/LitJSON.
 /Users/rfwei/Project/Record/netcore/obj/Debug/netcoreapp3.1/Record.pdb
 /Users/rfwei/Project/Record/netcore/bin/Debug/netcoreapp3.1/appsettings.Development.json
 /Users/rfwei/Project/Record/netcore/bin/Debug/netcoreapp3.1/appsettings.json
-/Users/rfwei/Project/Record/netcore/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
 /Users/rfwei/Project/Record/netcore/bin/Debug/netcoreapp3.1/Record.deps.json
 /Users/rfwei/Project/Record/netcore/bin/Debug/netcoreapp3.1/Record.runtimeconfig.json
 /Users/rfwei/Project/Record/netcore/bin/Debug/netcoreapp3.1/Record.runtimeconfig.dev.json
@@ -80,3 +78,5 @@ D:/WorkingResources/C#/C#Project/Record/netcore/bin/Debug/netcoreapp3.1/LitJSON.
 /Users/rfwei/Project/Record/netcore/obj/Debug/netcoreapp3.1/staticwebassets/Record.StaticWebAssets.Manifest.cache
 /Users/rfwei/Project/Record/netcore/obj/Debug/netcoreapp3.1/staticwebassets/Record.StaticWebAssets.xml
 /Users/rfwei/Project/Record/netcore/obj/Debug/netcoreapp3.1/Record.genruntimeconfig.cache
+/Users/rfwei/Project/Record/netcore/obj/Debug/netcoreapp3.1/Record.csproj.AssemblyReference.cache
+/Users/rfwei/Project/Record/netcore/obj/Debug/netcoreapp3.1/scopedcss/bundle/Record.styles.css
